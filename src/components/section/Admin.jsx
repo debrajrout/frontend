@@ -8,7 +8,7 @@ const AdminDashboard = () => {
     const [applications, setApplications] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [isAdmin, setIsAdmin] = useState(true); // State to check if user is admin
+    const [isAdmin, setIsAdmin] = useState(true);
     const { user } = useUser();
     const email = user.primaryEmailAddress.emailAddress;
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ const AdminDashboard = () => {
             });
 
             if (response.status === 403) {
-                setIsAdmin(false); // User is not an admin
+                setIsAdmin(false);
                 return;
             }
 
@@ -57,7 +57,6 @@ const AdminDashboard = () => {
                 throw new Error('Failed to verify job post');
             }
 
-            // Update job status in state
             setJobs(jobs => jobs.map(job => job._id === jobId ? { ...job, verified: true } : job));
         } catch (error) {
             console.error('Error:', error);
@@ -75,7 +74,6 @@ const AdminDashboard = () => {
                 throw new Error('Failed to delete job post');
             }
 
-            // Remove deleted job from state
             setJobs(jobs => jobs.filter(job => job._id !== jobId));
         } catch (error) {
             console.error('Error:', error);
@@ -93,7 +91,6 @@ const AdminDashboard = () => {
                 throw new Error('Failed to delete application');
             }
 
-            // Remove deleted application from state
             setApplications(apps => apps.filter(app => app._id !== applicationId));
         } catch (error) {
             console.error('Error:', error);
@@ -202,7 +199,8 @@ const AdminDashboard = () => {
                 </motion.button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Job Posts Section */}
                 <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
                     <h2 className="text-2xl text-indigo-400 font-bold mb-4">Job Posts</h2>
                     {jobs.length === 0 ? (
@@ -244,6 +242,7 @@ const AdminDashboard = () => {
                     )}
                 </div>
 
+                {/* Job Applications Section */}
                 <div className="bg-gray-800 p-6 rounded-lg shadow-lg">
                     <h2 className="text-2xl text-indigo-400 font-bold mb-4">Job Applications</h2>
                     {applications.length === 0 ? (
@@ -283,6 +282,11 @@ const AdminDashboard = () => {
                     )}
                 </div>
             </div>
+
+            {/* Footer */}
+            <footer className="mt-16 text-center text-gray-500">
+                <p>&copy; {new Date().getFullYear()} Your Company. All rights reserved.</p>
+            </footer>
         </div>
     );
 };

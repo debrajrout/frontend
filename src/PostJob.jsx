@@ -4,16 +4,17 @@ import { z } from 'zod';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
+// Organized Zod Schema
 const jobSchema = z.object({
     name: z.string().min(3, { message: 'Job name must be at least 3 characters long' }),
-    type: z.enum(['Full-time', 'Part-time', 'Contract', 'Internship'], { message: 'Invalid job type' }),
-    category: z.enum(['Technology', 'Healthcare', 'Finance', 'Education', 'Other'], { message: 'Invalid category' }),
+    type: z.enum(['Full-time', 'Part-time', 'Contract', 'Internship'], { message: 'Please select a valid job type' }),
+    category: z.enum(['Technology', 'Healthcare', 'Finance', 'Education', 'Other'], { message: 'Please select a valid category' }),
     location: z.string().min(3, { message: 'Location must be at least 3 characters long' }),
     description: z.string().min(10, { message: 'Description must be at least 10 characters long' }),
     salaryRange: z.string().regex(/^\d+-\d+$/, { message: 'Salary range must be in the format "min-max"' }),
     isAvailable: z.boolean(),
     companyName: z.string().min(3, { message: 'Company name must be at least 3 characters long' }),
-    image: z.any().optional()
+    image: z.any().optional(),
 });
 
 const PostJob = () => {
@@ -28,7 +29,7 @@ const PostJob = () => {
         salaryRange: '',
         isAvailable: true,
         companyName: '',
-        image: null
+        image: null,
     });
     const [errors, setErrors] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -105,8 +106,7 @@ const PostJob = () => {
 
                 if (response.ok) {
                     const data = await response.json();
-                    console.log('Job created successfully:', data);
-                    setSuccessMessage('Your job has been submitted. After review and confirmation, it will be listed on our portal.');
+                    setSuccessMessage('Your job has been submitted successfully. After review and confirmation, it will be listed on our portal.');
                     setIsSubmitted(true);
                 } else {
                     console.error('Error creating job');
@@ -122,7 +122,7 @@ const PostJob = () => {
     };
 
     const handleBackToHome = () => {
-        navigate('/');
+        navigate('/dashboard');
     };
 
     const handleBackToDashboard = () => {
@@ -131,7 +131,6 @@ const PostJob = () => {
 
     return (
         <div className="min-h-screen flex flex-col">
-
             <motion.div
                 className="flex flex-col items-center justify-center bg-gradient-to-r from-indigo-600 to-purple-600 py-20"
                 initial={{ opacity: 0 }}
@@ -139,7 +138,7 @@ const PostJob = () => {
                 transition={{ duration: 0.8 }}
             >
                 <h1 className="text-5xl font-bold text-white mb-4">Create Your Job Posting</h1>
-                <p className="text-lg text-white">Reach the best candidates by posting your job with us today.</p>
+                <p className="text-lg text-white text-center">Fill out the details below to post a job and reach top candidates.</p>
             </motion.div>
 
             <motion.div
@@ -149,7 +148,7 @@ const PostJob = () => {
                 transition={{ duration: 0.5 }}
             >
                 <motion.div
-                    className="max-w-xl w-full p-8 bg-white shadow-lg rounded-lg"
+                    className="max-w-2xl w-full p-10 bg-white shadow-lg rounded-lg"
                     initial={{ opacity: 0, y: 50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
@@ -161,21 +160,22 @@ const PostJob = () => {
                             animate={{ x: 0, opacity: 1 }}
                             transition={{ type: "spring", stiffness: 50 }}
                         >
-                            <h2 className="text-3xl font-bold mb-6 text-center text-indigo-600">Create a New Job</h2>
+                            <h2 className="text-3xl font-bold mb-6 text-center text-indigo-600">New Job Details</h2>
 
                             {errors.length > 0 && (
                                 <motion.div
-                                    className="mb-4 text-red-600"
+                                    className="mb-4 p-4 border-l-4 border-red-500 bg-red-50 text-red-700"
                                     initial={{ y: -10, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ duration: 0.3 }}
                                 >
-                                    {errors.map((error, index) => (
-                                        <p key={index}>{error.message}</p>
-                                    ))}
+                                    <ul>
+                                        {errors.map((error, index) => (
+                                            <li key={index}>{error.message}</li>
+                                        ))}
+                                    </ul>
                                 </motion.div>
                             )}
-
 
                             <div className="mb-4">
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">Job Name</label>
@@ -184,6 +184,7 @@ const PostJob = () => {
                                     name="name"
                                     value={formData.name}
                                     onChange={handleChange}
+                                    placeholder="e.g., Senior Software Engineer"
                                     className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                     required
                                 />
@@ -227,6 +228,7 @@ const PostJob = () => {
                                     name="location"
                                     value={formData.location}
                                     onChange={handleChange}
+                                    placeholder="e.g., San Francisco, CA"
                                     className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                     required
                                 />
@@ -238,7 +240,9 @@ const PostJob = () => {
                                     name="description"
                                     value={formData.description}
                                     onChange={handleChange}
+                                    placeholder="Describe the job responsibilities and requirements"
                                     className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    rows="4"
                                     required
                                 />
                             </div>
@@ -250,20 +254,22 @@ const PostJob = () => {
                                     name="salaryRange"
                                     value={formData.salaryRange}
                                     onChange={handleChange}
+                                    placeholder="e.g., 50000-80000"
                                     className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                    required
                                 />
                             </div>
 
                             <div className="mb-4">
-                                <label htmlFor="isAvailable" className="block text-sm font-medium text-gray-700">Is Available</label>
+                                <label htmlFor="isAvailable" className="block text-sm font-medium text-gray-700">Job Availability</label>
                                 <motion.select
                                     name="isAvailable"
                                     value={formData.isAvailable}
                                     onChange={handleChange}
                                     className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                 >
-                                    <option value={true}>Yes</option>
-                                    <option value={false}>No</option>
+                                    <option value={true}>Available</option>
+                                    <option value={false}>Not Available</option>
                                 </motion.select>
                             </div>
 
@@ -274,13 +280,14 @@ const PostJob = () => {
                                     name="companyName"
                                     value={formData.companyName}
                                     onChange={handleChange}
+                                    placeholder="e.g., Tech Innovators Inc."
                                     className="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                                     required
                                 />
                             </div>
 
-                            <div className="mb-4">
-                                <label htmlFor="image" className="block text-sm font-medium text-gray-700">Upload Image</label>
+                            <div className="mb-6">
+                                <label htmlFor="image" className="block text-sm font-medium text-gray-700">Upload Company Logo</label>
                                 <motion.input
                                     type="file"
                                     name="image"
@@ -291,14 +298,13 @@ const PostJob = () => {
 
                             <motion.button
                                 type="submit"
-                                className={`w-full p-3 rounded-md text-white font-bold ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700'}`}
+                                className={`w-full py-3 rounded-md text-white font-bold ${isSubmitting ? 'bg-gray-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700'}`}
                                 disabled={isSubmitting}
                                 whileHover={{ scale: isSubmitting ? 1 : 1.05 }}
                                 whileTap={{ scale: isSubmitting ? 1 : 0.95 }}
                             >
                                 {isSubmitting ? 'Submitting...' : 'Create Job'}
                             </motion.button>
-
 
                             <div className="mt-6 flex justify-between">
                                 <motion.button
@@ -359,7 +365,6 @@ const PostJob = () => {
                 </motion.div>
             </motion.div>
 
-            {/* Footer Section */}
             <footer className="bg-gray-800 text-white py-6 text-center">
                 <p>&copy; 2024 Your Company. All rights reserved.</p>
             </footer>

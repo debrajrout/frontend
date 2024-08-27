@@ -65,7 +65,7 @@ const router = createBrowserRouter(
         }
       />
       <Route
-        path="/admin-cz"
+        path="/admin"
         element={
           <>
             <SignedIn>

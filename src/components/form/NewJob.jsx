@@ -4,6 +4,7 @@ import { z } from 'zod';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
+
 // Improved Zod schema for form validation with custom error messages
 const jobSchema = z.object({
     name: z.string().min(3, { message: 'Job name must be at least 3 characters long' }),
