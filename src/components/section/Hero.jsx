@@ -4,35 +4,37 @@ import { useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { motion } from "framer-motion";
 
-
 export default function Hero() {
     const { isSignedIn, user } = useUser();
-
-
 
     useEffect(() => {
         const createUser = async () => {
             if (isSignedIn && user) {
-                try {
-                    const response = await fetch('http://localhost:5000/api/users/create-user', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            name: user.fullName,
-                            email: user.primaryEmailAddress.emailAddress,
-                        }),
-                    });
+                // Fallback values in case some user data is not available immediately
+                const name = user.fullName || user.firstName || user.username || "Unknown User";
+                const email = user.primaryEmailAddress?.emailAddress;
 
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        console.error('Error creating user:', errorData.message);
-                    } else {
-                        console.log('User created successfully');
+                if (email) {
+                    try {
+                        const response = await fetch('http://localhost:5000/api/users/create-user', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ name, email }),
+                        });
+
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            console.error('Error creating user:', errorData.message);
+                        } else {
+                            console.log('User created successfully');
+                        }
+                    } catch (error) {
+                        console.error('Error creating user:', error);
                     }
-                } catch (error) {
-                    console.error('Error creating user:', error);
+                } else {
+                    console.error('User email is not available. Cannot create user.');
                 }
             }
         };
