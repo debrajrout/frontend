@@ -14,7 +14,7 @@ export default function Hero() {
         const createUser = async () => {
             if (isSignedIn && user) {
                 try {
-                    const response = await fetch('http://52.66.154.15:5000/api/users/create-user', {
+                    const response = await fetch('http://localhost:5000/api/users/create-user', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

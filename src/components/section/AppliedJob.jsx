@@ -16,7 +16,7 @@ const AppliedJobs = () => {
     useEffect(() => {
         const fetchApplications = async () => {
             try {
-                const response = await fetch(`http://52.66.154.15:5000/api/applications/${email}`);
+                const response = await fetch(`http://localhost:5000/api/applications/${email}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch applications');
                 }
@@ -35,7 +35,7 @@ const AppliedJobs = () => {
 
     const handleDelete = async (applicationId) => {
         try {
-            const response = await fetch(`http://52.66.154.15:5000/api/applications/delete/${applicationId}`, {
+            const response = await fetch(`http://localhost:5000/api/applications/delete/${applicationId}`, {
                 method: 'DELETE',
             });
 

@@ -53,7 +53,7 @@ const PostJob = () => {
 
     const fetchUserByEmail = async (email) => {
         try {
-            const response = await fetch(`http://52.66.154.15:5000/api/fetch-user/by-email/${email}`);
+            const response = await fetch(`http://localhost:5000/api/fetch-user/by-email/${email}`);
             if (response.ok) {
                 const user = await response.json();
                 return user._id;
@@ -99,7 +99,7 @@ const PostJob = () => {
             }
 
             try {
-                const response = await fetch('http://52.66.154.15:5000/api/jobs/create-job', {
+                const response = await fetch('http://localhost:5000/api/jobs/create-job', {
                     method: 'POST',
                     body: updatedFormData,
                 });

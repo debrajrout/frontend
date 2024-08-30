@@ -36,7 +36,7 @@ export default function Dashboard() {
     useEffect(() => {
         const fetchJobs = async () => {
             try {
-                const response = await fetch('http://52.66.154.15:5000/api/getjobs/jobs');
+                const response = await fetch('http://localhost:5000/api/getjobs/jobs');
                 const result = await response.json();
                 setJobs(result.data);
                 setFilteredJobs(result.data);

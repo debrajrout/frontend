@@ -15,7 +15,7 @@ const AdminDashboard = () => {
 
     const fetchJobsAndApplications = useCallback(async () => {
         try {
-            const response = await fetch('http://52.66.154.15:5000/api/admin/admin', {
+            const response = await fetch('http://localhost:5000/api/admin/admin', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ const AdminDashboard = () => {
 
     const handleVerifyJob = useCallback(async (jobId) => {
         try {
-            const response = await fetch(`http://52.66.154.15:5000/api/admin/verify-job/${jobId}`, {
+            const response = await fetch(`http://localhost:5000/api/admin/verify-job/${jobId}`, {
                 method: 'PATCH',
             });
 
@@ -66,7 +66,7 @@ const AdminDashboard = () => {
 
     const handleDeleteJob = useCallback(async (jobId) => {
         try {
-            const response = await fetch(`http://52.66.154.15:5000/api/admin/delete-job/${jobId}`, {
+            const response = await fetch(`http://localhost:5000/api/admin/delete-job/${jobId}`, {
                 method: 'DELETE',
             });
 
@@ -83,7 +83,7 @@ const AdminDashboard = () => {
 
     const handleDeleteApplication = useCallback(async (applicationId) => {
         try {
-            const response = await fetch(`http://52.66.154.15:5000/api/admin/delete-application/${applicationId}`, {
+            const response = await fetch(`http://localhost:5000/api/admin/delete-application/${applicationId}`, {
                 method: 'DELETE',
             });
 

@@ -69,7 +69,7 @@ const JobApplicationFormDialog = ({ job, user, open, setOpen }) => {
         formDataToSend.append('email', user.primaryEmailAddress.emailAddress);
 
         try {
-            const response = await fetch(`http://52.66.154.15:5000/api/apply/${job._id}/apply`, {
+            const response = await fetch(`http://localhost:5000/api/apply/${job._id}/apply`, {
                 method: 'POST',
                 body: formDataToSend,
             });

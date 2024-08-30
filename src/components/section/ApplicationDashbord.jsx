@@ -16,7 +16,7 @@ const PostedJobsWithApplications = () => {
     useEffect(() => {
         const fetchJobsAndApplications = async () => {
             try {
-                const response = await fetch(`http://52.66.154.15:5000/api/posted-jobs/${email}`);
+                const response = await fetch(`http://localhost:5000/api/posted-jobs/${email}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch jobs');
                 }
@@ -35,7 +35,7 @@ const PostedJobsWithApplications = () => {
 
     const handleStatusChange = async (applicationId, newStatus) => {
         try {
-            const response = await fetch(`http://52.66.154.15:5000/api/posted-jobs/applications/${applicationId}/status`, {
+            const response = await fetch(`http://localhost:5000/api/posted-jobs/applications/${applicationId}/status`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ const PostedJobsWithApplications = () => {
         if (!confirmed) return;
 
         try {
-            const response = await fetch(`http://52.66.154.15:5000/api/posted-jobs/jobs/${jobId}`, {
+            const response = await fetch(`http://localhost:5000/api/posted-jobs/jobs/${jobId}`, {
                 method: 'DELETE',
             });
 
