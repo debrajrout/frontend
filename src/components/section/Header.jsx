@@ -79,7 +79,7 @@ export default function Header() {
             <div className="flex items-center gap-6">
                 <SignedOut>
                     <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-                        <SignInButton forceRedirectUrl="/dashboard" mode="modal" className="group flex items-center justify-between gap-4 rounded-lg border border-current px-4 py-2 text-teal-600 transition hover:bg-teal-600 focus:outline-none focus:ring active:bg-teal-500">
+                        <SignInButton forceRedirectUrl="/dashboard" className="group flex items-center justify-between gap-4 rounded-lg border border-current px-4 py-2 text-teal-600 transition hover:bg-teal-600 focus:outline-none focus:ring active:bg-teal-500">
                             <span className="flex items-center gap-2">
                                 <span className="font-medium transition-colors group-hover:text-white">Sign In</span>
                                 <span className="shrink-0 rounded-full border border-teal-600 bg-white p-2 group-active:border-teal-500">

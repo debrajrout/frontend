@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 
 export default function Hero() {
     const { isSignedIn, user } = useUser();
+    console.log('User:', user);
 
     useEffect(() => {
         const createUser = async () => {

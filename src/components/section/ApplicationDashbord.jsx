@@ -121,7 +121,7 @@ const PostedJobsWithApplications = () => {
                     />
                     <p className="text-lg">You have not posted any jobs yet.</p>
                     <motion.button
-                        onClick={() => navigate('/dashboard')}
+                        onClick={() => navigate('/job-post')}
                         className="mt-4 bg-green-600 text-white py-3 px-8 rounded-full shadow-lg hover:bg-green-500 transition duration-300"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
